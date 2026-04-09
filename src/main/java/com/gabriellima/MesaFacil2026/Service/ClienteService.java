@@ -15,7 +15,7 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     //Retornar todos os clientes
-    public List<ClienteModel> findALl(){
+    public List<ClienteModel> listarTodos(){
         return clienteRepository.findAll();
 
     }
@@ -28,13 +28,12 @@ public class ClienteService {
     }
 
     //BuscarPorId
-    public Optional<ClienteModel> findById( Long id){
-
+    public Optional<ClienteModel> findById(Long id){
         return clienteRepository.findById(id);
     }
 
     //Deletar
-    public void deleteById(Long id){
+    public void deletarPorId(Long id){
 
         if(clienteRepository.existsById(id)){
             clienteRepository.deleteById(id);
