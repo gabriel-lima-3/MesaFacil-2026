@@ -1,16 +1,14 @@
 package com.gabriellima.MesaFacil2026.Controller;
 import com.gabriellima.MesaFacil2026.Model.ClienteModel;
-import com.gabriellima.MesaFacil2026.Repository.ClienteRepository;
+
 import com.gabriellima.MesaFacil2026.Service.ClienteService;
-import org.springframework.http.HttpHeaders;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.ref.Cleaner;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +16,7 @@ import java.util.Optional;
 @RequestMapping("/cliente")
 public class ClienteController {
 
+    @Autowired
     private ClienteService clienteService;
 
     //Listar todos
