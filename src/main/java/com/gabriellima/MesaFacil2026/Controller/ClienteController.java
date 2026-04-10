@@ -5,6 +5,8 @@ import com.gabriellima.MesaFacil2026.Service.ClienteService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.ref.Cleaner;
@@ -52,12 +54,29 @@ public class ClienteController {
 
     }
 
+    //Deletar cliente pelo Id
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<ClienteModel> deletar(@PathVariable Long id){
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
 
-      return clienteService.deletarPorId(id);
+       clienteService.deletarPorId(id);
+       return ResponseEntity.noContent().build();
 
     }
+
+    //Atulizar dados do CLiente
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<ClienteModel> AtualizarCliente(@RequestBody ClienteModel clienteModel,  @PathVariable Long id ){
+
+        ClienteModel clienteAtualizado = clienteService.atualizarCliente(clienteModel, id );
+
+        return ResponseEntity.ok(clienteAtualizado);
+
+    }
+
+
+
+
 
 
 
