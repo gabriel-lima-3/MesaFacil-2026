@@ -1,14 +1,11 @@
 package com.gabriellima.MesaFacil2026.Controller;
+import com.gabriellima.MesaFacil2026.Mapper.ClienteMapper;
 import com.gabriellima.MesaFacil2026.Model.ClienteModel;
-
 import com.gabriellima.MesaFacil2026.Service.ClienteService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,9 +18,9 @@ public class ClienteController {
 
     //Listar todos
     @GetMapping("/listar")
-    public ResponseEntity <List<ClienteModel>> listaxrTodos(){
+    public ResponseEntity <List<ClienteMapper>> listarTodos(){
 
-        List<ClienteModel> lista = clienteService.listarTodos();
+        List<ClienteMapper> lista = clienteService.listarTodos();
         return ResponseEntity.ok(lista);
 
     }

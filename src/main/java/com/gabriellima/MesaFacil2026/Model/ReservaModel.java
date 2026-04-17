@@ -25,8 +25,6 @@ public class ReservaModel {
     private ReservaStatus reservaStatus;
     private ReservaTipoDePagamento statusTipoDePagamanento;
     private LocalDateTime horarioInicio;
-    private LocalDateTime horarioTerminar;
-
 
     @ManyToOne
     @JoinColumn(name = "client_id")
