@@ -1,14 +1,15 @@
 package com.gabriellima.MesaFacil2026.Controller;
+import com.gabriellima.MesaFacil2026.Dto.ClienteDtoReponse;
+import com.gabriellima.MesaFacil2026.Dto.ClienteDtoRequest;
+import com.gabriellima.MesaFacil2026.Mapper.ClienteMapper;
 import com.gabriellima.MesaFacil2026.Model.ClienteModel;
-
+import com.gabriellima.MesaFacil2026.Repository.ReservaRepository;
 import com.gabriellima.MesaFacil2026.Service.ClienteService;
-
+import org.hibernate.usertype.UserVersionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,26 +18,28 @@ import java.util.Optional;
 public class ClienteController {
 
     @Autowired
-    private ClienteService clienteService;
+    private  ClienteService clienteService;
+
 
     //Listar todos
     @GetMapping("/listar")
-    public ResponseEntity <List<ClienteModel>> listaxrTodos(){
+    public ResponseEntity <List<ClienteDtoReponse>> listarTodos(){
 
-        List<ClienteModel> lista = clienteService.listarTodos();
+        List<ClienteDtoReponse> lista = clienteService.listarTodos().stream().map(ClienteMapper::toResponse).toList();
         return ResponseEntity.ok(lista);
 
     }
 
     //Listar por id
+
     @GetMapping("/listar/{id}")
-    public ResponseEntity<ClienteModel> listarPorId(@PathVariable Long id){
+    public ResponseEntity<ClienteDtoReponse> listarPorId(@PathVariable Long id){
 
         Optional<ClienteModel> clienteId = clienteService.findById(id);
 
         if(clienteId.isPresent()){
-
-            return ResponseEntity.ok(clienteId.get());
+            ClienteDtoReponse dto  = ClienteMapper.toResponse(clienteId.get());
+            return ResponseEntity.ok(dto);
 
         }else{
             return ResponseEntity.notFound().build();
@@ -46,12 +49,11 @@ public class ClienteController {
 
     //Criar novo Cliente
     @PostMapping("/criar")
-    public ResponseEntity<ClienteModel> criarUsuario(@RequestBody ClienteModel clienteModel){
-        ClienteModel clienteSave = clienteService.criarCliene(clienteModel);
+    public ResponseEntity<ClienteDtoReponse> criarUsuario(@RequestBody ClienteDtoRequest request){
 
-        return new ResponseEntity<>(clienteSave, HttpStatus.CREATED);
-
-
+            ClienteModel clienteSave = ClienteMapper.toEntity(request);
+            ClienteModel save = clienteService.criarCliente(clienteSave);
+            return new ResponseEntity<>(ClienteMapper.toResponse(save), HttpStatus.CREATED);
     }
 
     //Deletar cliente pelo Id
@@ -66,19 +68,15 @@ public class ClienteController {
     //Atulizar dados do CLiente
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<ClienteModel> AtualizarCliente(@RequestBody ClienteModel clienteModel,  @PathVariable Long id ){
+    public ResponseEntity<ClienteDtoReponse> atualizarCliente(@RequestBody ClienteDtoRequest request,  @PathVariable Long id ){
 
-        ClienteModel clienteAtualizado = clienteService.atualizarCliente(clienteModel, id );
 
-        return ResponseEntity.ok(clienteAtualizado);
+        ClienteModel clienteAtulizado = ClienteMapper.toEntity(request);
+        ClienteModel atulizado = clienteService.atualizarCliente(clienteAtulizado, id);
+
+        return ResponseEntity.ok(ClienteMapper.toResponse(atulizado));
 
     }
-
-
-
-
-
-
 
 
 
