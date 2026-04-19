@@ -21,7 +21,7 @@ public class ClienteService {
     }
 
     //Criar novo Cliente
-    public ClienteModel criarCliene(ClienteModel clienteModel){
+    public ClienteModel criarCliente(ClienteModel clienteModel){
 
         return clienteRepository.save(clienteModel);
 
