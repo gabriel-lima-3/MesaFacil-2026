@@ -21,7 +21,7 @@ public class ReservaModel {
     @Id
     private Long id;
     private int quantidade;
-    private ReservaTipoDeEvento tipoReserva;
+    private ReservaTipoDeEvento tipoEvento;
     private ReservaStatus reservaStatus;
     private ReservaTipoDePagamento statusTipoDePagamanento;
     private LocalDateTime horarioInicio;
